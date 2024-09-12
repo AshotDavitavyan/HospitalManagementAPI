@@ -7,6 +7,7 @@ public class Doctor
 	public int CabinetID { get; set; }
 	public int SpecializationID { get; set; }
 	public int RegionID { get; set; }
+	
 	public Cabinet Cabinet { get; set; }
 	public Specialization Specialization { get; set; }
 	public Region Region { get; set; }
