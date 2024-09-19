@@ -1,8 +1,8 @@
-namespace HospitalManagementAPI.Models;
+namespace Domain.Models;
 
 public class Specialization
 {
-	public int SpecializationID { get; set; }
+	public int Id { get; set; }
 	public string Name { get; set; }
 	
 	public ICollection<Doctor> Doctors { get; set; }

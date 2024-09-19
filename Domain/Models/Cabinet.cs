@@ -1,8 +1,8 @@
-namespace HospitalManagementAPI.Models;
+namespace Domain.Models;
 
 public class Cabinet
 {
-	public int CabinetID { get; set; }
+	public int Id { get; set; }
 	public string Number { get; set; }
 	
 	public ICollection<Doctor> Doctors { get; set; }

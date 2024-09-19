@@ -1,4 +1,4 @@
-namespace HospitalManagementAPI.Models;
+namespace Domain.Models;
 
 public class Patient
 {
@@ -9,6 +9,6 @@ public class Patient
 	public string Address { get; set; }
 	public DateTime DateOfBirth { get; set; }
 	public char Gender { get; set; }
-	public int RegionID { get; set; }
+	public int RegionId { get; set; }
 	public Region Region { get; set; }
 }

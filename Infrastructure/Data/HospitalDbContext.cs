@@ -1,7 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using HospitalManagementAPI.Models;
 
-namespace HospitalManagementAPI.Data;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infrastructure.Data;
 
 public class HospitalDbContext : DbContext
 {
@@ -20,27 +21,26 @@ public class HospitalDbContext : DbContext
 		modelBuilder.Entity<Doctor>()
 			.HasOne<Cabinet>()
 			.WithMany(c => c.Doctors)
-			.HasForeignKey(d => d.CabinetID)
+			.HasForeignKey(d => d.CabinetId)
 			.OnDelete(DeleteBehavior.Restrict);
 		
 		modelBuilder.Entity<Doctor>()
 			.HasOne<Specialization>()
 			.WithMany(s => s.Doctors)
-			.HasForeignKey(d => d.SpecializationID)
+			.HasForeignKey(d => d.SpecializationId)
 			.OnDelete(DeleteBehavior.Restrict);
 
 		modelBuilder.Entity<Doctor>()
 			.HasOne<Region>()
 			.WithMany(r => r.Doctors)
-			.HasForeignKey(d => d.RegionID)
+			.HasForeignKey(d => d.RegionId)
 			.OnDelete(DeleteBehavior.Restrict);
 
 		modelBuilder.Entity<Patient>()
 			.HasOne<Region>()
 			.WithMany(r => r.Patients)
-			.HasForeignKey(p => p.RegionID)
+			.HasForeignKey(p => p.RegionId)
 			.OnDelete(DeleteBehavior.Restrict);
-		
 		
 		base.OnModelCreating(modelBuilder);
 	}
