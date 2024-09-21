@@ -8,7 +8,7 @@ namespace Infrastructure.Repositories;
 
 public class DoctorRepository : IDoctorRepository
 {
-	public readonly HospitalDbContext _context;
+	private readonly HospitalDbContext _context;
 	
 	public DoctorRepository(HospitalDbContext context)
 	{

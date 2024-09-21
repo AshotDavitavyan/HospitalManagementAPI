@@ -7,5 +7,5 @@ public class DoctorCreateDto
 	public string MiddleName { get; set; }
 	public int CabinetId { get; set; }
 	public int SpecializationId { get; set; }
-	public int? RegionId { get; set; }
+	public int RegionId { get; set; }
 }

@@ -1,3 +1,24 @@
+using Application.Interfaces;
+using Application.Services;
+using Domain.Interfaces;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
+
+void ConfigureServices(IServiceCollection services)
+{
+	services.AddScoped<IPatientRepository, PatientRepository>();
+	services.AddScoped<IDoctorRepository, DoctorRepository>();
+	services.AddScoped<IRegionRepository, RegionRepository>();
+	services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+	services.AddScoped<ICabinetRepository, CabinetRepository>();
+
+	services.AddScoped<IPatientService, PatientService>();
+	services.AddScoped<IDoctorService, DoctorService>();
+
+//	services.AddScoped<HospitalDbContext>(options => options.UseSqlServer("Server=localhost;Database=HospitalManagement;Trusted_Connection=True;")); //////
+	services.AddControllers();
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
