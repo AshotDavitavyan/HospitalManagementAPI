@@ -16,7 +16,7 @@ public class PatientService : IPatientService
 		_regionRepository = regionRepository;
 	}
 	
-	public async Task<PatientDto> GetByIdAsync(int id)
+	public async Task<PatientDto?> GetByIdAsync(int id)
 	{
 		var patient = await _patientRepository.GetByIdAsync(id);
 		if (patient == null) return null;
@@ -52,9 +52,9 @@ public class PatientService : IPatientService
 		return patientDtos;
 	}
 
-	public async Task AddPatientAsync(PatientCreateDto patientCreateDto)
+	public async Task<int> AddPatientAsync(PatientCreateDto patientCreateDto)
 	{
-		await _patientRepository.AddAsync(new Patient
+		return await _patientRepository.AddAsync(new Patient
 		{
 			FirstName = patientCreateDto.FirstName,
 			LastName = patientCreateDto.LastName,
@@ -64,8 +64,10 @@ public class PatientService : IPatientService
 		});
 	}
 
-	public async Task UpdatePatientAsync(int id, PatientUpdateDto patientUpdateDto)
+	public async Task<int?> UpdatePatientAsync(int id, PatientUpdateDto patientUpdateDto)
 	{
+		var patient = await _patientRepository.GetByIdAsync(id);
+		if (patient == null) return null;
 		await _patientRepository.UpdateAsync(new Patient
 		{
 			Id = id,
@@ -75,10 +77,14 @@ public class PatientService : IPatientService
 			Address = patientUpdateDto.Address,
 			DateOfBirth = patientUpdateDto.DateOfBirth
 		});
+		return id;
 	}
 
-	public async Task DeletePatientAsync(int id)
+	public async Task<int?> DeletePatientAsync(int id)
 	{
+		var patient = await _patientRepository.GetByIdAsync(id);
+		if (patient == null) return null;
 		await _patientRepository.DeleteAsync(new Patient { Id = id });
+		return id;
 	}
 }

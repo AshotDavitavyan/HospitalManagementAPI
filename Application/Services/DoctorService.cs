@@ -18,9 +18,9 @@ public class DoctorService : IDoctorService
 		_specializationRepository = specializationRepository;
 		_regionRepository = regionRepository;
 	}
-	public async Task<DoctorDto> GetByIdAsync(int id)
+	public async Task<DoctorDto?> GetByIdAsync(int id)
 	{
-		Doctor doctor = await _doctorRepository.GetByIdAsync(id);
+		Doctor? doctor = await _doctorRepository.GetByIdAsync(id);
 		if (doctor == null) return null;
 		return new DoctorDto()
 		{
@@ -39,7 +39,7 @@ public class DoctorService : IDoctorService
 
 		foreach (Doctor doctor in doctors)
 		{
-			doctorDtos.Add(new DoctorListDto()
+			doctorDtos.Add(new DoctorListDto
 			{
 				Id = doctor.Id,
 				FullName = doctor.FullName,
@@ -52,9 +52,9 @@ public class DoctorService : IDoctorService
 		return doctorDtos;
 	}
 
-	public async Task AddDoctorAsync(DoctorCreateDto doctorCreateDto)
+	public async Task<int> AddDoctorAsync(DoctorCreateDto doctorCreateDto)
 	{
-		await _doctorRepository.AddAsync(new Doctor
+		return await _doctorRepository.AddAsync(new Doctor
 		{
 			FullName = $"{doctorCreateDto.FirstName} {doctorCreateDto.LastName} {doctorCreateDto.MiddleName}",
 			CabinetId = doctorCreateDto.CabinetId,
@@ -63,8 +63,10 @@ public class DoctorService : IDoctorService
 		});
 	}
 
-	public async Task UpdateDoctorAsync(int id, DoctorUpdateDto doctorUpdateDto)
+	public async Task<int?> UpdateDoctorAsync(int id, DoctorUpdateDto doctorUpdateDto)
 	{
+		var doctor = await _doctorRepository.GetByIdAsync(id);
+		if (doctor is null) return null;
 		await _doctorRepository.UpdateAsync(new Doctor
 		{
 			Id = id,
@@ -73,10 +75,14 @@ public class DoctorService : IDoctorService
 			RegionId = doctorUpdateDto.RegionId,
 			SpecializationId = doctorUpdateDto.SpecializationId
 		});
+		return id;
 	}
 
-	public async Task DeleteDoctorAsync(int id)
+	public async Task<int?> DeleteDoctorAsync(int id)
 	{
-		await _doctorRepository.DeleteAsync(await _doctorRepository.GetByIdAsync(id));
+		var doctor = await _doctorRepository.GetByIdAsync(id);
+		if (doctor is null) return null;
+		await _doctorRepository.DeleteAsync(doctor);
+		return id;
 	}
 }

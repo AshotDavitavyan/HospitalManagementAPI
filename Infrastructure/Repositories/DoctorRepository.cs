@@ -1,4 +1,5 @@
 
+using Azure.Core;
 using Domain.Interfaces;
 using Domain.Models;
 using Infrastructure.Data;
@@ -25,10 +26,11 @@ public class DoctorRepository : IDoctorRepository
 		return await _context.Doctors.FindAsync(id);
 	}
 
-	public async Task AddAsync(Doctor doctor)
+	public async Task<int> AddAsync(Doctor doctor)
 	{
-		await _context.Doctors.AddAsync(doctor);
+		var result = await _context.Doctors.AddAsync(doctor);
 		await _context.SaveChangesAsync();
+		return result.Entity.Id;
 	}
 
 	public async Task UpdateAsync(Doctor doctor)
@@ -40,6 +42,10 @@ public class DoctorRepository : IDoctorRepository
 	public async Task DeleteAsync(Doctor doctor)
 	{
 		var doctorToDelete = await _context.Doctors.FindAsync(doctor.Id);
-		_context.Doctors.Remove(doctorToDelete);
+		if (doctorToDelete is not null)
+		{
+			_context.Doctors.Remove(doctorToDelete);
+			await _context.SaveChangesAsync();
+		}
 	}
 }

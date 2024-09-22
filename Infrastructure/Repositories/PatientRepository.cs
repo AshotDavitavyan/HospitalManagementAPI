@@ -24,10 +24,11 @@ public class PatientRepository : IPatientRepository
 		return await _context.Patients.FindAsync(id);
 	}
 
-	public async Task AddAsync(Patient patient)
+	public async Task<int> AddAsync(Patient patient)
 	{
-		await _context.Patients.AddAsync(patient);
+		var result = await _context.Patients.AddAsync(patient);
 		await _context.SaveChangesAsync();
+		return result.Entity.Id;
 	}
 
 	public async Task UpdateAsync(Patient patient)
@@ -44,5 +45,6 @@ public class PatientRepository : IPatientRepository
 			_context.Patients.Remove(patientToDelete);
 			await _context.SaveChangesAsync();
 		}
+		
 	}
 }

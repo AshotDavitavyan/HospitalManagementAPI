@@ -8,6 +8,8 @@ public class HospitalDbContext : DbContext
 {
 	public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
 	{
+		Database.EnsureDeleted();
+		Database.EnsureCreated();
 	}
 	
 	public DbSet<Doctor> Doctors { get; set; }
@@ -18,6 +20,8 @@ public class HospitalDbContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		base.OnModelCreating(modelBuilder);
+		
 		modelBuilder.Entity<Doctor>()
 			.HasOne<Cabinet>()
 			.WithMany(c => c.Doctors)
@@ -42,6 +46,5 @@ public class HospitalDbContext : DbContext
 			.HasForeignKey(p => p.RegionId)
 			.OnDelete(DeleteBehavior.Restrict);
 		
-		base.OnModelCreating(modelBuilder);
 	}
 }
