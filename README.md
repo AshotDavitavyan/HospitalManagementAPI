@@ -23,32 +23,6 @@ This project is an **ASP.NET Core Web API** for managing hospital data. It provi
 - **AutoMapper** for object mapping between models and DTOs
 - **Dependency Injection** for managing services and repositories
 
-## Project Structure
-
-```plaintext
-HospitalManagementAPI/
-│
-├── Application/
-│   ├── DTOs/                # Data Transfer Objects (DTOs)
-│   ├── Interfaces/           # Interfaces for Services and Repositories
-│   ├── Services/             # Service layer for business logic
-│
-├── Domain/
-│   ├── Models/               # Domain models for entities (Doctor, Patient, etc.)
-│   ├── Repositories/         # Repository interfaces for database access
-│
-├── Infrastructure/
-│   ├── Data/                 # Database context and migrations
-│   ├── Repositories/         # Repository implementations
-│
-├── HospitalManagementAPI/    # Main Web API project
-│   ├── Controllers/          # API Controllers for handling HTTP requests
-│   ├── Program.cs            # Entry point of the application
-│   ├── appsettings.json      # Configuration file (connection string, etc.)
-│
-└── README.md                 # This README file
-```
-
 ## Installation and Setup
 
 ### Prerequisites
